@@ -23,9 +23,9 @@ def chat_completion(message):
     }
     response = requests.post(main.CHAT_URL, headers=headers, data=json.dumps(payload))
     res = response.json()
-    print('-------------------- 接口返回 --------------------')
+    print('-------------------- 接口返回 start --------------------')
     print(res["data"]["message"])
-    print('-------------------- 接口返回 --------------------')
+    print('-------------------- 接口返回 end --------------------')
     return res["data"]["message"]
 
 
@@ -63,15 +63,18 @@ class CustomLLM(LLM):
                 'content': prompt
             }
         ]
+        print('-------------------- here is the prompt start --------------------')
+        print(prompt[0:2000])
+        print('-------------------- here is the prompt end --------------------')
         text = chat_completion(message)
         if stop is not None:
             text = enforce_stop_tokens(text, stop)
 
         # 初始化generation对象， 对里面的content指定值进行处理
-        generation = ChatGeneration(message={"content": text, "type": "answer"})
+        # generation = ChatGeneration(message={"content": text, "type": "answer"})
         # 最近返回ChatResult形式的消息结果
-        chatResult = ChatResult(generations=[generation])
-        print(chatResult)
+        # chatResult = ChatResult(generations=[generation])
+        # print(chatResult)
         return text
 
     @property

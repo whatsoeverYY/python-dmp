@@ -35,6 +35,7 @@ def judge_end_char(start_char: str, end_char: str) -> bool:
 
 
 def get_first_non_whitespace_char(s):
+    """获取第一个不为空的字符"""
     return next((char for char in s if not char.isspace()), None)
 
 
@@ -67,6 +68,8 @@ def update_file(file_path: str, object_str: str, content: str):
                 start_line_number = index
                 start_line_end_char = line.rstrip()[-1]
                 leading_spaces += get_leading_spaces(line)
+            if start_line_end_char != '' and start_line_end_char != left_brace and start_line_end_char != left_bracket:
+                start_line_end_char = line.rstrip()[-1]
 
         lines.insert(end_line_number, tab_index + leading_spaces + content.lstrip('\n').lstrip() + '\n')
         print(start_line_number, end_line_number, lines)
@@ -107,13 +110,13 @@ class OutputUpdateTool(BaseTool):
             file_path = kwargs.get('file_path', self.file_path)
             object_str = kwargs.get('object_str', self.object_str)
             content = kwargs.get('content', self.content)
-            print('-------------------- here is the output content --------------------')
+            print('-------------------- OutputUpdateTool - here is the output content --------------------')
             print(file_path)
             print('-------------------- here is the output content --------------------')
             print(object_str)
             print('-------------------- here is the output content --------------------')
             print(content)
-            print('-------------------- here is the output content --------------------')
+            print('-------------------- OutputUpdateTool - here is the output content --------------------')
             update_file(file_path, object_str, content)
         except Exception as e:
             return f"Fail to update the file {file_path}. Error: {e}"
