@@ -1,11 +1,9 @@
 from crewai import Agent, Task, Crew, Process
 from llm.get_tongyi_llm import tongyi_llm
-from llm.get_tongyi_llm import custom_llm
 from crewai_tools import (FileReadTool)
 from tools.output_update_tool import OutputUpdateTool
 
-# llm = tongyi_llm
-llm = custom_llm
+llm = tongyi_llm
 
 file1 = '/Users/ever/workspace/data-management-platform-frontend/src/router/dict/index.ts'
 file2 = '/Users/ever/workspace/data-management-platform-frontend/src/locales/cn.ts'
@@ -13,11 +11,19 @@ file3 = '/Users/ever/workspace/data-management-platform-frontend/src/views/dicti
 file4 = '/Users/ever/workspace/data-management-platform-frontend/src/views/dictionary/config/dictionary.tsx'
 
 file_reader = Agent(
-    role="前端开发专家，精通vue、typescript",
-    goal="理解文件内容，根据需求正确修改文件",
-    backstory='需要根据新增的内容，给各个文件文件添加相关配置',
+    role="一个前端开发专家，精通vue、typescript",
+    goal="理解文件内容，根据需求正确分析出需要修改的对象以及新增的代码",
+    backstory='有一个基于Vue和TypeScript的前端项目在开发中',
     llm=llm,
     tools=[FileReadTool()],
+    allow_delegation=False
+)
+file_updater = Agent(
+    role="前端开发专家，精通vue、typescript",
+    goal="根据分析得出的需要添加配置的对象以及新增的代码内容，对文件{file}进行修改",
+    backstory="项目文件中有一个变量进行了更新，需要对给定的文件进行相应的配置添加",
+    llm=llm,
+    tools=[OutputUpdateTool()],
     allow_delegation=False
 )
 read_task = Task(
@@ -27,14 +33,6 @@ read_task = Task(
     agent=file_reader
 )
 
-file_updater = Agent(
-    role="前端开发专家，精通vue、typescript",
-    goal="根据分析得出的需要添加配置的对象以及新增的代码内容，对文件{file}进行修改",
-    backstory="根据分析得出的需要添加配置的对象以及新增的代码内容，对文件{file}进行修改",
-    llm=llm,
-    tools=[OutputUpdateTool()],
-    allow_delegation=False
-)
 file_update_task = Task(
     description='根据分析得出的需要添加配置的对象、新增的代码内容，使用工具对{file}进行修改',
     expected_output='请输出修改后的文件内容',

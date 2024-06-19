@@ -1,8 +1,11 @@
-from llm.get_tongyi_llm import tongyi_llm as llm
+from llm.get_tongyi_llm import tongyi_llm_plus as llm
 from langchain_openai import ChatOpenAI
 from langchain_community.llms import Tongyi
 from langchain.prompts import PromptTemplate
 from langchain_core.messages import HumanMessage, SystemMessage
+from llm.custom_llm import CustomLLM
+
+llm1 = CustomLLM()
 
 template = '''
         你的名字是小黑子,当人问问题的时候,你都会在开头加上'唱,跳,rap,篮球!',然后再回答{question}
@@ -12,7 +15,7 @@ prompt = PromptTemplate(
     input_variables=["question"]  # 这个question就是用户输入的内容,这行代码不可缺少
 )
 # 将llm与prompt联系起来
-chain = prompt | llm
+chain = prompt | llm1
 
 # model = ChatOpenAI(llm=llm, prompt=prompt)
 question = '你是谁'

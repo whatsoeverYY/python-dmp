@@ -4,6 +4,12 @@ import os
 load_dotenv()
 
 DASHSCOPE_API_KEY = os.getenv('DASHSCOPE_API_KEY')
+CHAT_URL = os.getenv('CHAT_URL')
+CHAT_AUTHORIZATION = os.getenv('CHAT_AUTHORIZATION')
+CHAT_MODEL = os.getenv('CHAT_MODEL')
+CHAT_MAX_TOKEN = int(os.getenv('CHAT_MAX_TOKEN'))
+CHAT_ENGINE = os.getenv('CHAT_ENGINE')
+
 print(DASHSCOPE_API_KEY)
 
 # This is a sample Python script.

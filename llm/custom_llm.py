@@ -63,9 +63,9 @@ class CustomLLM(LLM):
                 'content': prompt
             }
         ]
-        print('-------------------- here is the prompt start --------------------')
-        print(prompt[0:2000])
-        print('-------------------- here is the prompt end --------------------')
+        # print('-------------------- here is the prompt start --------------------')
+        # print(prompt[0:2000])
+        # print('-------------------- here is the prompt end --------------------')
         text = chat_completion(message)
         if stop is not None:
             text = enforce_stop_tokens(text, stop)
