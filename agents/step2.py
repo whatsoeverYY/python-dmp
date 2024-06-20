@@ -1,13 +1,14 @@
 from crewai import Task, Crew, Process
+from main import BASE_ROUTE
 from file_reader_agent import file_reader
 from file_updater_agent import file_updater
 from tools.file_read_tool import FileReadTool
 from tools.output_update_tool import OutputUpdateTool
 
-file1 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/router/dict/index.ts'
-file2 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/locales/cn.ts'
-file3 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/views/dictionary/config/configs.tsx'
-file4 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/views/dictionary/config/dictionary.tsx'
+file1 = 'router/dict/index.ts'
+file2 = 'locales/cn.ts'
+file3 = 'views/dictionary/config/configs.tsx'
+file4 = 'views/dictionary/config/dictionary.tsx'
 
 read_task = Task(
     description="An enumeration member 'Parameter Type (CT_PARAM_TYPE)' "
@@ -45,7 +46,7 @@ my_crew = Crew(
     full_output=True,
     verbose=True,
 )
-result = my_crew.kickoff(inputs={"file": file4})
+result = my_crew.kickoff(inputs={"file": BASE_ROUTE + file4})
 print('my_crew.usage_metrics', my_crew.usage_metrics)
 print('***the result***')
 print(result)

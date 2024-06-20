@@ -40,9 +40,9 @@ class FileReadTool(BaseTool):
     ) -> Any:
         try:
             file_path = kwargs.get('file_path', self.file_path)
-            print('-------------------- FileReadTool - here is the file_path --------------------')
+            print('-------------------- FileReadTool - here is the file_path Start --------------------')
             print(file_path)
-            print('-------------------- FileReadTool - here is the file_path --------------------')
+            print('-------------------- FileReadTool - here is the file_path End --------------------')
             with open(file_path, 'r') as file:
                 return file.read()
         except Exception as e:

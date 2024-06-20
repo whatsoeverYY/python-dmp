@@ -1,14 +1,15 @@
 from crewai import Task, Crew, Process
+from main import BASE_ROUTE
 from file_reader_agent import file_reader
 from file_updater_agent import file_updater
 from tools.file_read_tool import FileReadTool
 from tools.output_update_tool import OutputUpdateTool
 
-file1 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/types/DataType.ts'
-file2 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/utils/dataType.ts'
-file3 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/type/router.ts'
-file4 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/router/data/index.ts'
-file5 = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/locales/cn.ts'
+file1 = 'types/DataType.ts'
+file2 = 'utils/dataType.ts'
+file3 = 'type/router.ts'
+file4 = 'router/data/index.ts'
+file5 = 'locales/cn.ts'
 
 read_task = Task(
     description="A new module need to be added into the project: TRANSLATIONAL_MEDICINE(转化医学)."
@@ -45,7 +46,7 @@ my_crew = Crew(
     full_output=True,
     verbose=True,
 )
-result = my_crew.kickoff(inputs={"file": file5})
+result = my_crew.kickoff(inputs={"file": BASE_ROUTE + file5})
 print('my_crew.usage_metrics', my_crew.usage_metrics)
 print('***the result***')
 print(result)

@@ -3,6 +3,8 @@ import os
 
 load_dotenv()
 
+BASE_ROUTE = os.getenv('BASE_ROUTE')
+ROOT_PATH = os.getenv('ROOT_PATH')
 DASHSCOPE_API_KEY = os.getenv('DASHSCOPE_API_KEY')
 CHAT_URL = os.getenv('CHAT_URL')
 CHAT_AUTHORIZATION = os.getenv('CHAT_AUTHORIZATION')

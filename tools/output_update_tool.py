@@ -110,13 +110,13 @@ class OutputUpdateTool(BaseTool):
             file_path = kwargs.get('file_path', self.file_path)
             object_str = kwargs.get('object_str', self.object_str)
             content = kwargs.get('content', self.content)
-            print('-------------------- OutputUpdateTool - here is the output content --------------------')
+            print('-------------------- OutputUpdateTool - here is the output content Start --------------------')
             print(file_path)
             print('-------------------- here is the output content --------------------')
             print(object_str)
             print('-------------------- here is the output content --------------------')
             print(content)
-            print('-------------------- OutputUpdateTool - here is the output content --------------------')
+            print('-------------------- OutputUpdateTool - here is the output content End --------------------')
             update_file(file_path, object_str, content)
         except Exception as e:
             return f"Fail to update the file {file_path}. Error: {e}"
