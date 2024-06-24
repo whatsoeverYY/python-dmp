@@ -5,10 +5,10 @@ from file_updater_agent import file_updater
 from tools.file_read_tool import FileReadTool
 from tools.output_update_tool import OutputUpdateTool
 
-file1 = 'router/dict/index.ts'
-file2 = 'locales/cn.ts'
-file3 = 'views/dictionary/config/configs.tsx'
-file4 = 'views/dictionary/config/dictionary.tsx'
+file1 = 'src/router/dict/index.ts'
+file2 = 'src/locales/cn.ts'
+file3 = 'src/views/dictionary/config/configs.tsx'
+file4 = 'src/views/dictionary/config/dictionary.tsx'
 
 read_task = Task(
     description="An enumeration member 'Parameter Type (CT_PARAM_TYPE)' "

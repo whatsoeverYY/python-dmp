@@ -7,6 +7,7 @@ from crewai_tools import (
     SerperDevTool,
     WebsiteSearchTool
 )
+from tools.file_create_tool import FileCreateTool
 
 # Define agents with specific roles and tools
 researcher = Agent(
@@ -19,9 +20,10 @@ researcher = Agent(
 
 writer = Agent(
     role='Content Writer',
-    goal='Write engaging articles on AI discoveries',
+    goal='write a poet in the file /Users/ever/Documents/AI/projects/ai-projects/automatic-generate-code-for-dmp/poet',
     backstory='',
     llm=llm,
+    tools=[FileCreateTool()],
     verbose=True
 )
 
@@ -32,15 +34,15 @@ research_task = Task(
     agent=researcher
 )
 write_article_task = Task(
-    description='Draft an article on the latest AI technologies',
-    expected_output='an article on the latest AI technologies',
+    description='create a file according to the requirements',
+    expected_output='a new file with the poet content',
     agent=writer
 )
 
 # Assemble the crew with a sequential process
 my_crew = Crew(
-    agents=[researcher, writer],
-    tasks=[research_task, write_article_task],
+    agents=[writer],
+    tasks=[write_article_task],
     process=Process.sequential,
     full_output=True,
     verbose=True,

@@ -1,0 +1,5 @@
+from update_base import update_base_files
+from update_base_by_whole import update_base_files_by_while
+
+update_base_files()
+update_base_files_by_while()

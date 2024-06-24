@@ -68,9 +68,9 @@ my_crew = Crew(
 )
 new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
-csv_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/export.csv'
-enum_template_file = main.ROOT_PATH + '_template_code/domains/templateCodeDomain/enum.ts'
-enum_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/enum.ts'
+csv_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/export.csv'
+enum_template_file = main.BASE_ROUTE + '_template_code/domains/templateCodeDomain/enum.ts'
+enum_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/enum.ts'
 
 inputs = {
     "csv_file": csv_file,

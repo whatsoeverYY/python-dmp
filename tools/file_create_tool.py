@@ -22,7 +22,7 @@ class FileCreateToolSchema(FixedFileCreateToolSchema):
 
 
 class FileCreateTool(BaseTool):
-    name: str = "Read a file's content"
+    name: str = "Create a file with teh provided content"
     description: str = "A tool that can be used to create a file with the content."
     args_schema: Type[BaseModel] = FileCreateToolSchema
     file_path: Optional[str] = None

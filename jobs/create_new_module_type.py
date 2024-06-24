@@ -65,15 +65,17 @@ my_crew = Crew(
 )
 new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
-basic_interfaces = main.ROOT_PATH + '_modules/' + 'basic_interfaces.ts'
-csv_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/export.csv'
-origin_type_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/origin_type.ts'
+basic_interfaces = main.BASE_ROUTE + '_modules/' + 'basic_interfaces.ts'
+csv_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/export.csv'
+type_template_file = main.BASE_ROUTE + '_template_code/types/TemplateCodeType.ts'
+origin_type_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/origin_type.ts'
 
-type_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/type.ts'
+type_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/type.ts'
 
 inputs = {
     "csv_file": csv_file,
     "origin_type_file": origin_type_file,
+    "type_template_file": type_template_file,
     "basic_interfaces": basic_interfaces,
     "type_file": type_file,
 }

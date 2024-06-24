@@ -33,5 +33,5 @@ def read_files_in_directory(directory_path):
 
 
 # 调用函数，传入要读取的文件夹路径
-directory_template_path = main.ROOT_PATH + '_template_code'
+directory_template_path = main.BASE_ROUTE + '_template_code'
 read_files_in_directory(directory_template_path)
