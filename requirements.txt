@@ -6,3 +6,5 @@ dashscope
 langchain_experimental
 tabulate
 panda
+dotenv
+crewai

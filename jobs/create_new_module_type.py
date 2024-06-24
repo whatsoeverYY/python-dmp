@@ -63,13 +63,19 @@ my_crew = Crew(
     full_output=True,
     verbose=True,
 )
-new_module_name = 'TRANSLATIONAL_MEDICINE'
-new_module_name_cn = '转化医学'
+new_module_name = main.NEW_MODULE_NAME
+new_module_name_cn = main.NEW_MODULE_NAME_CN
 basic_interfaces = main.ROOT_PATH + '_modules/' + 'basic_interfaces.ts'
 csv_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/export.csv'
 origin_type_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/origin_type.ts'
+
 type_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/type.ts'
 
-result = my_crew.kickoff(inputs={"csv_file": csv_file, "origin_type_file": origin_type_file
-    , "basic_interfaces": basic_interfaces, "type_file": type_file})
+inputs = {
+    "csv_file": csv_file,
+    "origin_type_file": origin_type_file,
+    "basic_interfaces": basic_interfaces,
+    "type_file": type_file,
+}
+result = my_crew.kickoff(inputs=inputs)
 

@@ -4,3 +4,6 @@
 .env
 
 .idea/
+
+_modules/
+_template_code/

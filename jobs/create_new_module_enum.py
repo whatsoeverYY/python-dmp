@@ -15,9 +15,9 @@ file_reader = Agent(
          "The 'TEMPLATE_CODE' part should be replaced by {new_module_name},"
          "And the three enums should be filled by the fields name in the {csv_file}."
          "The LIST_COLUMNS enum and the DOC_ITEMS enum should be filled by the fields name in the '数据库 Field 名称'"
-         " which is also 'YES' in the '列表展示’ column"
+         " which is not 'NO' in the '列表展示' column"
          "The SEARCH_PARAMS enum should be filled by the fields name in the '数据库 Field 名称'"
-         " which is also 'YES' in the '检索’ column.",
+         " which is not 'NO' in the '检索' column.",
     backstory='A front-end project based on Vue and TypeScript is under development.'
               'You need to figure out the dto basing on the provided two files.',
     llm=llm,
@@ -66,12 +66,17 @@ my_crew = Crew(
     full_output=True,
     verbose=True,
 )
-new_module_name = 'TRANSLATIONAL_MEDICINE'
-new_module_name_cn = '转化医学'
+new_module_name = main.NEW_MODULE_NAME
+new_module_name_cn = main.NEW_MODULE_NAME_CN
 csv_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/export.csv'
-enum_template_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/enum_template.ts'
+enum_template_file = main.ROOT_PATH + '_template_code/domains/templateCodeDomain/enum.ts'
 enum_file = main.ROOT_PATH + '_modules/' + new_module_name.lower() + '/enum.ts'
 
-result = my_crew.kickoff(inputs={"csv_file": csv_file, "enum_template_file": enum_template_file
-    , "enum_file": enum_file, "new_module_name": new_module_name})
+inputs = {
+    "csv_file": csv_file,
+    "enum_template_file": enum_template_file,
+    "new_module_name": new_module_name,
+    "enum_file": enum_file,
+}
+result = my_crew.kickoff(inputs=inputs)
 

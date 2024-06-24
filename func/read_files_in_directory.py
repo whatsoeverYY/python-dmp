@@ -1,4 +1,5 @@
 import os
+import main
 from agents.create_new_module import my_crew
 from func.camel_case_transform import to_camel_case, to_pascal_case
 
@@ -11,8 +12,8 @@ def replace_root_path(root: str) -> str:
     return root.replace('_template_code', 'src')
 
 
-new_module_name = 'TRANSLATIONAL_MEDICINE'
-new_module_name_cn = '转化医学'
+new_module_name = main.NEW_MODULE_NAME
+new_module_name_cn = main.NEW_MODULE_NAME_CN
 
 
 def read_files_in_directory(directory_path):
