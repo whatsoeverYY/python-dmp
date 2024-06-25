@@ -11,7 +11,7 @@ read_task = Task(
     description='A new module need to be added into the project: {module_info}. Please read the file {file}, '
                 'following the TEMPLATE_CODE(模板代码) part of the code including the comment part,'
                 'analyze the updated code.',
-    expected_output='Please tell the complete new code.'
+    expected_output='The full new code after modified.'
                     'And remember the Action Input part in your answer should always following the format:'
                     '"""'
                     'Action Input: {{"key": "value"}}'
@@ -56,6 +56,3 @@ def update_base_files_by_while():
         print('***the result***')
         print(result)
         print('***the result***')
-
-
-update_base_files_by_while()

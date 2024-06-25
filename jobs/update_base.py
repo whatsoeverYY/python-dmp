@@ -62,6 +62,3 @@ def update_base_files():
         print('***the result***')
         print(result)
         print('***the result***')
-
-
-update_base_files()
