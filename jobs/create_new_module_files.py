@@ -16,6 +16,12 @@ new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
 
+excluded_files = [
+    'domains/templateCodeDomain/enum.ts',
+    'types/TemplateCodeType.ts',
+]
+
+
 def read_files_in_directory(directory_path):
     try:
         # 遍历文件夹中的所有文件和子文件夹
@@ -23,11 +29,18 @@ def read_files_in_directory(directory_path):
             for file in files:
                 file_path = os.path.join(root, file)
                 print(f"文件路径: {file_path}")
-                new_file_path = replace_path_name(os.path.join(replace_root_path(root), file), new_module_name)
-                print(f"需要生成的文件路径: {new_file_path}")
-
-                new_module = new_module_name + "(" + new_module_name_cn + ")"
-                my_crew.kickoff(inputs={"file": file_path, "file_path": new_file_path, "new_module": new_module})
+                is_excluded = any(file in file_path for file in excluded_files)
+                if not is_excluded:
+                    new_file_path = replace_path_name(os.path.join(replace_root_path(root), file), new_module_name)
+                    print(f"需要生成的文件路径: {new_file_path}")
+                    new_module = new_module_name + "(" + new_module_name_cn + ")"
+                    inputs = {
+                        "file": file_path,
+                        "file_path": new_file_path,
+                        "new_module": new_module
+                    }
+                    my_crew.kickoff(inputs=inputs)
+                    print('my_crew.usage_metrics', my_crew.usage_metrics)
     except Exception as e:
         print(f"发生错误: {e}")
 

@@ -11,10 +11,13 @@ read_task = Task(
     description='A new module need to be added into the project: {module_info}. Please read the file {file}, '
                 'following the TEMPLATE_CODE(模板代码) part of the code including the comment part,'
                 'analyze the objects in this file that need to be configured,'
-                'and specify the new code that needs to be added.',
+                'and specify the new code that needs to be added.'
+                'Pay attention to the field format in the new code,'
+                'which should always follow the format of the code exists whether it is in uppercase format'
+                'or camelcase format or other format',
     expected_output='Please list the names of the objects in this file that need to be modified '
                     'and the new code that needs to be added. '
-                    'Do not include the existing code content in the result.'
+                    'Do not include the existing code content in the result!'
                     'And remember the Action Input part in your answer should always following the format:'
                     '"""'
                     'Action Input: {{"key": "value"}}'
@@ -24,8 +27,8 @@ read_task = Task(
 )
 file_update_task = Task(
     description='Modify the file {file} according to the identified objects and the new code content.',
-    expected_output='Please provide the contents of the modified file'
-                    'Do not include the existing code content in the result.'
+    expected_output='Please provide the contents of the modified file.'
+                    'Do not include the existing code content in the result!'
                     'And remember the Action Input part in your answer should always following the format:'
                     '"""'
                     'Action Input: {{"key": "value"}}'

@@ -1,7 +1,8 @@
 from crewai import Agent, Task, Crew, Process
-from llm.get_tongyi_llm import custom_llm
+from llm.get_tongyi_llm import custom_llm, tongyi_llm
 from tools.file_read_tool import FileReadTool
 from tools.file_create_tool import FileCreateTool
+from func.camel_case_transform import to_camel_case
 import main
 
 llm = custom_llm
@@ -30,7 +31,7 @@ read_task = Task(
                 'Please read them and figure out three enums definition'
                 "basing on the data in the '数据库 Field 名称', '检索' and '列表展示’ column of the {csv_file}"
                 "and the template code in the {enum_template_file}."
-                'Write them into a new file {enum_file}.',
+                'Write correct code into a new file {enum_file}.',
     expected_output='The new code.'
                     'And remember the Action Input part in your answer should always following the format:'
                     '"""'
@@ -70,7 +71,7 @@ new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 csv_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/export.csv'
 enum_template_file = main.BASE_ROUTE + '_template_code/domains/templateCodeDomain/enum.ts'
-enum_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/enum.ts'
+enum_file = main.BASE_ROUTE + 'src/domains/' + to_camel_case(new_module_name) + 'Domain/enum.ts'
 
 inputs = {
     "csv_file": csv_file,
@@ -78,5 +79,11 @@ inputs = {
     "new_module_name": new_module_name,
     "enum_file": enum_file,
 }
-result = my_crew.kickoff(inputs=inputs)
 
+
+def create_enum():
+    result = my_crew.kickoff(inputs=inputs)
+    print('my_crew.usage_metrics', my_crew.usage_metrics)
+    print('***the result***')
+    print(result)
+    print('***the result***')

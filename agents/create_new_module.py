@@ -57,4 +57,3 @@ my_crew = Crew(
     full_output=True,
     verbose=True,
 )
-# result = my_crew.kickoff(inputs={"file_path": BASE_ROUTE + file5})
