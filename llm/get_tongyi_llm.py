@@ -11,5 +11,8 @@ tongyi_llm = Tongyi(
 )
 
 tongyi_llm_plus = Tongyi(
+    model_name='qwen-plus',
     temperature=0
 )
+
+# custom_llm = tongyi_llm_plus

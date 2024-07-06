@@ -1,7 +1,10 @@
 from typing import Any, List, Mapping, Optional
 import main
 import requests
+import os
 import json
+import logging
+import datetime
 from langchain.callbacks.manager import CallbackManagerForLLMRun
 from langchain_core.outputs import ChatGeneration, ChatGenerationChunk, ChatResult
 from langchain.llms.base import LLM
@@ -43,6 +46,26 @@ if __name__ == '__main__':
     chat_completion(messages)
 
 
+def setup_logger(output_filename):
+    """配置并返回一个新的logger实例"""
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+
+    # 创建一个handler，用于写入日志文件
+    log_file_name = os.path.join('logs', output_filename)
+    handler = logging.FileHandler(log_file_name)
+    handler.setLevel(logging.INFO)
+
+    # 定义handler的输出格式
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+
+    # 给logger添加handler
+    logger.addHandler(handler)
+
+    return logger
+
+
 class CustomLLM(LLM):
     model_name: str = "gpt-4o"
 
@@ -63,18 +86,17 @@ class CustomLLM(LLM):
                 'content': prompt
             }
         ]
-        # print('-------------------- here is the prompt start --------------------')
-        # print(prompt[0:2000])
-        # print('-------------------- here is the prompt end --------------------')
+        # now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")  # 获取当前时间并格式化为字符串
+        # log_file_name = f"function_output_{now}.log"  # 动态生成日志文件名
+
+        # 设置并获取logger实例
+        # logger = setup_logger(log_file_name)
+        # logger.info(prompt)
+
         text = chat_completion(message)
         if stop is not None:
             text = enforce_stop_tokens(text, stop)
 
-        # 初始化generation对象， 对里面的content指定值进行处理
-        # generation = ChatGeneration(message={"content": text, "type": "answer"})
-        # 最近返回ChatResult形式的消息结果
-        # chatResult = ChatResult(generations=[generation])
-        # print(chatResult)
         return text
 
     @property

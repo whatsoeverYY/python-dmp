@@ -5,7 +5,7 @@ from tools.file_create_tool import FileCreateTool
 from func.camel_case_transform import to_pascal_case
 import main
 
-llm = custom_llm
+llm = tongyi_llm
 
 file_reader = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",
@@ -70,7 +70,7 @@ read_task = Task(
 #                 'the appropriate import phase.'
 #                 'Write them into a new file {type_file}.',
 #     expected_output='The updated code from {origin_type_file}.'
-#                     'And remember the Action Input part in your answer should always following the format:'
+#                     'And remember the Action Input part in your answer should always follow the format:'
 #                     '"""'
 #                     'Action Input: {{"key": "value"}}'
 #                     '"""',

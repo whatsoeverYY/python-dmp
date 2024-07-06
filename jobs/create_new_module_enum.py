@@ -5,7 +5,9 @@ from tools.file_create_tool import FileCreateTool
 from func.camel_case_transform import to_camel_case
 import main
 
-llm = custom_llm
+# 根据模板enum、csv文件创建完整enum文件
+
+llm = tongyi_llm
 
 file_reader = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",

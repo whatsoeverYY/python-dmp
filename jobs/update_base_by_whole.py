@@ -45,7 +45,7 @@ new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
 
-def update_base_files_by_while():
+def update_base_files_by_whole():
     for i in range(0, len(files)):
         inputs = {
             "file": main.BASE_ROUTE + files[i],

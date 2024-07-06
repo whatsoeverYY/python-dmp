@@ -8,3 +8,8 @@ def to_camel_case(snake_str: str) -> str:
 def to_pascal_case(snake_str: str) -> str:
     components = snake_str.lower().split('_')
     return ''.join(x.title() for x in components)
+
+
+# 转为kebab-case
+def to_kebab_case(snake_str: str) -> str:
+    return snake_str.lower().replace('_', '-')

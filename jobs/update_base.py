@@ -49,7 +49,8 @@ file1 = 'src/types/DataType.ts'
 file2 = 'src/utils/dataType.ts'
 file3 = 'src/type/router.ts'
 file4 = 'src/locales/cn.ts'
-files = [file1, file2, file3, file4]
+# files = [file1, file2, file3, file4]
+files = [file3, file4]
 new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
