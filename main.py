@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+import re
 from func.camel_case_transform import to_kebab_case, to_pascal_case, to_camel_case
 
 load_dotenv()
@@ -15,6 +16,9 @@ CHAT_ENGINE = os.getenv('CHAT_ENGINE')
 
 NEW_MODULE_NAME = os.getenv('NEW_MODULE_NAME')
 NEW_MODULE_NAME_CN = os.getenv('NEW_MODULE_NAME_CN')
+
+ENUM_FILE = 'domains/templateCodeDomain/enum.ts'
+TYPE_FILE = 'types/TemplateCodeType.ts'
 
 
 def print_hi(name):
@@ -32,8 +36,25 @@ def print_hi(name):
     print(to_camel_case('TRANSLATIONAL_MEDICINE'))
 
 
+def searchActionInput(text):
+    action_input_pattern = r"[\s]*Action\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
+
+    action_input = re.search(action_input_pattern, text).group(1)
+
+    print("Action Input:", action_input)
+
+
 if __name__ == '__main__':
     a = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/_template_code/domains/templateCodeDomain/enum.ts'
     b = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/_template_code/views/templateCode/locales/cn.ts'
-    print_hi(a)
-    print_hi(b)
+    # print_hi(a)
+    # print_hi(b)
+    text = '''Action: Update a file's content
+Action Input:
+```json 
+{"file_path": "/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/router/dict/index.ts", "object_str": "DictPermNames", "content": "[DICTYPENAMES.CT_PARAM_TYPE]: { permCode: 'dict.ct_param_type' }"}
+```
+
+Observation: The file has been successfully updated.'''
+    searchActionInput(text)
+

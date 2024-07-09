@@ -10,7 +10,9 @@ from create_new_module_enum import create_enum
 from update_new_module_files import update_new_module_files
 
 generate_files_in_directory(main.BASE_ROUTE + '_template_code')
-# 检查23个基础文件正常生成
+# 检查21个基础文件正常生成(不包含enum和type文件)
+
+# 检查LLM接口返回的Action Input格式是否正确，不正确则立即中断程序
 
 update_base_files()
 update_base_files_by_whole()
@@ -26,11 +28,3 @@ create_enum()
 
 update_new_module_files()
 # 检查10个文件是否被正常更新
-
-
-enum_file = 'domains/templateCodeDomain/enum.ts'
-type_file = 'types/TemplateCodeType.ts'
-
-
-def replace_path_name(path: str, new_name: str) -> str:
-    return path.replace('templateCode', to_camel_case(new_name)).replace('TemplateCode', to_pascal_case(new_name))

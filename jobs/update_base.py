@@ -49,20 +49,21 @@ file1 = 'src/types/DataType.ts'
 file2 = 'src/utils/dataType.ts'
 file3 = 'src/type/router.ts'
 file4 = 'src/locales/cn.ts'
-# files = [file1, file2, file3, file4]
-files = [file3, file4]
-new_module_name = main.NEW_MODULE_NAME
-new_module_name_cn = main.NEW_MODULE_NAME_CN
+files = [file1, file2, file3, file4]
+# files = [file1, file2]
 
 
 def update_base_files():
     for i in range(0, len(files)):
         inputs = {
             "file": main.BASE_ROUTE + files[i],
-            "module_info": new_module_name + '(' + new_module_name_cn + ')'
+            "module_info": main.NEW_MODULE_NAME + '(' + main.NEW_MODULE_NAME_CN + ')'
         }
         result = my_crew.kickoff(inputs=inputs)
         print('my_crew.usage_metrics', my_crew.usage_metrics)
         print('***the result***')
         print(result)
         print('***the result***')
+
+
+update_base_files()

@@ -28,6 +28,8 @@ def chat_completion(message):
     res = response.json()
     print('-------------------- 接口返回 start --------------------')
     print(res["data"]["message"])
+    if '```python' in res["data"]["message"] or '```json' in res["data"]["message"]:
+        raise Exception("Action Input格式错误，请重试")
     print('-------------------- 接口返回 end --------------------')
     return res["data"]["message"]
 

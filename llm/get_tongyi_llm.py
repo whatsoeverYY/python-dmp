@@ -15,4 +15,4 @@ tongyi_llm_plus = Tongyi(
     temperature=0
 )
 
-# custom_llm = tongyi_llm_plus
+# custom_llm = tongyi_llm

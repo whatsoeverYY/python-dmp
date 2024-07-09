@@ -3,7 +3,7 @@ from crewai import Agent, Task, Crew, Process
 from llm.get_tongyi_llm import custom_llm, tongyi_llm, tongyi_llm_plus
 from tools.file_read_tool import FileReadTool
 from tools.file_create_tool import FileCreateTool
-from create_new_module_from_csv import enum_file, replace_path_name
+from func.common import replace_path_name
 
 llm = custom_llm
 
@@ -91,12 +91,12 @@ def update_new_module_files(inputs):
     for i in range(0, len(need_update_files)):
         inputs = {
             "file": replace_path_name(new_module_path + need_update_files[i], new_module_name),
-            "enum": new_module_path + enum_file
+            "enum": new_module_path + main.ENUM_FILE
         }
         my_crew.kickoff(inputs=inputs)
     for i in range(0, len(need_update_by_llm_files)):
         inputs = {
             "file": replace_path_name(new_module_path + need_update_files[i], new_module_name),
-            "enum": new_module_path + enum_file
+            "enum": new_module_path + main.ENUM_FILE
         }
         my_crew.kickoff(inputs=inputs)
