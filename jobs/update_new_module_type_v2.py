@@ -2,20 +2,18 @@ from crewai import Agent, Task, Crew, Process
 from llm.get_tongyi_llm import custom_llm, tongyi_llm
 from tools.file_read_tool import FileReadTool
 from tools.file_create_tool import FileCreateTool
+from func.camel_case_transform import to_pascal_case
 import main
 
-llm = tongyi_llm
-
-# 创建只包含dto的type.ts文件
+llm = custom_llm
 
 file_reader = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",
-    goal="Please read the three files {csv_file}, {origin_type_file} and {basic_interfaces}."
-         "Step1: Basing on the field names exist in the '数据库 Field 名称' column of the {csv_file}, "
-         "update the {origin_type_file} by removing the redundancy."
-         "Step2: Choose interface from the {basic_interfaces} to replace the customized interface "
-         "in the {origin_type_file}, and add the import phase according to the note from the {basic_interfaces}."
-         "Please Make sure all customized interface are replaced.",
+    goal="Please read the two files {dto_type_file}, and {type_file}."
+         "Update the dto interface in the {type_file} according to the dto interface in the {dto_type_file}."
+         "Make sure all fields in the dto interface in the {type_file} have the same type as the fields"
+         " in the dto interface in the {dto_type_file}."
+         "And add the import into the {type_file} according to the import code in the {dto_type_file}",
     backstory='A front-end project based on Vue and TypeScript is under development.'
               'You need to figure out the dto basing on the provided two files.',
     llm=llm,
@@ -24,13 +22,12 @@ file_reader = Agent(
 )
 
 read_task = Task(
-    description="You are given three files {csv_file}, {origin_type_file} and {basic_interfaces}."
-                'Please read them and then update the {origin_type_file} by removing the redundancy'
-                'basing on the field names exist in the "数据库 Field 名称" column of the {csv_file} and'
-                'replace the customized interface by interface from the {basic_interfaces} and add'
-                'the appropriate import phase.'
-                'Write them into a new file {type_file}.',
-    expected_output='The updated code from {origin_type_file}.'
+    description="You are given two files {dto_type_file} and {type_file}."
+                'Please read them and then update the {type_file} '
+                'by replacing the type of the fields in the dto interface'
+                ' according to the type of the same fields in the dto interface in the {dto_type_file}.'
+                'and add correct import code into the {type_file}.',
+    expected_output='The complete code from the updated file {type_file}.'
                     'And remember the Action Input part in your answer should always following the format:'
                     '"""'
                     'Action Input: {{"key": "value"}}'
@@ -38,9 +35,11 @@ read_task = Task(
     agent=file_reader,
     tools=[FileReadTool()]
 )
+
+
 file_creator = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",
-    goal="Create the file {type_file} according to the new code content.",
+    goal="Modify the file {type_file} according to the new code content.",
     backstory='A front-end project based on Vue and TypeScript is under development.'
               'You need to create a new file {type_file} for the new module.',
     llm=llm,
@@ -48,7 +47,7 @@ file_creator = Agent(
     allow_delegation=False
 )
 file_create_task = Task(
-    description='Create the file {type_file} according to the new code content.',
+    description='Modify the file {type_file} according to the new code content.',
     expected_output='Please provide the contents of the new file'
                     'And remember the Action Input part in your answer should always following the format:'
                     '"""'
@@ -67,22 +66,23 @@ my_crew = Crew(
 )
 new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
-basic_interfaces = main.BASE_ROUTE + '_modules/' + 'basic_interfaces.ts'
-csv_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/export.csv'
-origin_type_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/origin_type.ts'
-type_file = main.BASE_ROUTE + '_modules/' + new_module_name.lower() + '/type.ts'
+root_path = main.BASE_ROUTE + '_modules/'
+
+dto_type_file = root_path + new_module_name.lower() + '/type.ts'
+type_file = main.BASE_ROUTE + 'src/types/' + to_pascal_case(new_module_name) + 'Type.ts'
 
 inputs = {
-    "csv_file": csv_file,
-    "origin_type_file": origin_type_file,
-    "basic_interfaces": basic_interfaces,
-    "type_file": type_file
+    "dto_type_file": dto_type_file,
+    "type_file": type_file,
 }
 
 
-def create_type():
+def update_type_v2():
     result = my_crew.kickoff(inputs=inputs)
     print('my_crew.usage_metrics', my_crew.usage_metrics)
     print('***the result***')
     print(result)
     print('***the result***')
+
+
+update_type_v2()

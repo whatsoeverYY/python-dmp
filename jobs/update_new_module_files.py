@@ -1,10 +1,11 @@
 import main
 from crewai import Agent, Task, Crew, Process
-from llm.get_tongyi_llm import custom_llm, tongyi_llm
+from llm.get_tongyi_llm import custom_llm, tongyi_llm, tongyi_llm_plus
 from tools.file_read_tool import FileReadTool
 from tools.file_create_tool import FileCreateTool
+from create_new_module_from_csv import enum_file, replace_path_name
 
-llm = tongyi_llm
+llm = custom_llm
 
 file_reader = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",
@@ -58,13 +59,25 @@ my_crew = Crew(
     verbose=True,
 )
 
+# 手动更新enum(checked - v1)
 need_update_files = [
-    # '/views/templateCode/detail/TemplateCodeEditPage.tsx',
-    # '/views/templateCode/BaseTemplateCodeListPage.tsx',
-    # '/views/templateCode/TemplateCodeRecycleBin.tsx',
+    '/views/templateCode/detail/TemplateCodeEditPage.tsx',
+    '/views/templateCode/BaseTemplateCodeListPage.tsx',
+    '/views/templateCode/TemplateCodeRecycleBin.tsx',
     '/views/templateCode/TemplateCodePreviewList.tsx',
 ]
 
+# LLM更新配置
+need_update_by_llm_files = [
+    '/domains/templateCodeDomain/entity.ts',
+    '/domains/templateCodeDomain/transform.ts',
+    '/views/templateCode/composition/useTemplateCodeDocEdit.tsx',
+    '/views/templateCode/composition/useTemplateCodeListColumns.tsx',
+    '/views/templateCode/composition/useTemplateCodeSearchFormItems.tsx',
+    '/views/templateCode/locales/cn.ts',
+]
+
+new_module_path = main.BASE_ROUTE + 'src'
 new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
@@ -75,16 +88,15 @@ def update_new_module_files(inputs):
     print('***the result***')
     print(result)
     print('***the result***')
-    # for i in range(0, len(need_update_files)):
-    #     inputs = {
-    #         "file": main.BASE_ROUTE + need_update_files[i],
-    #         "enum": main.BASE_ROUTE + 'domains/templateCodeDomain/enum.ts'
-    #     }
-
-
-# update_new_module_files(
-#     {
-#         "file": '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/views/translationalMedicine/TranslationalMedicinePreviewList.tsx',
-#         "enum": '/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/domains/translationalMedicineDomain/enum.ts'
-#     }
-# )
+    for i in range(0, len(need_update_files)):
+        inputs = {
+            "file": replace_path_name(new_module_path + need_update_files[i], new_module_name),
+            "enum": new_module_path + enum_file
+        }
+        my_crew.kickoff(inputs=inputs)
+    for i in range(0, len(need_update_by_llm_files)):
+        inputs = {
+            "file": replace_path_name(new_module_path + need_update_files[i], new_module_name),
+            "enum": new_module_path + enum_file
+        }
+        my_crew.kickoff(inputs=inputs)

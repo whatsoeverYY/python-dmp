@@ -5,7 +5,9 @@ from tools.file_create_tool import FileCreateTool
 from func.camel_case_transform import to_pascal_case
 import main
 
-llm = tongyi_llm
+llm = custom_llm
+
+# 创建包含三个接口的XXXType.ts文件
 
 file_reader = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",
@@ -43,40 +45,7 @@ read_task = Task(
     tools=[FileReadTool()]
 )
 
-# file_reader2 = Agent(
-#     role="An front-end development expert, proficient in Vue and TypeScript",
-#     goal="Please read the three files {csv_file}, {origin_type_file} and {basic_interfaces}."
-#          "Step1: Basing on the field names exist in the '数据库 Field 名称' column of the {csv_file}, "
-#          "update the {origin_type_file} by removing the redundancy."
-#          "Step2: Choose interface from the {basic_interfaces} to replace the customized interface "
-#          "in the {origin_type_file}, and add the import phase according to the note from the {basic_interfaces}."
-#          "Please Make sure all customized interface are replaced."
-#          "Step3: Follow the format in the {type_template_file} and "
-#          "add the other two interfaces SearchFormParams and SearchParams which is field names from the {csv_file}"
-#          " where the value of the '检索' column is 'YES'."
-#          "Step4: Make sure each interface extends the right interface according to the {type_template_file}.",
-#     backstory='A front-end project based on Vue and TypeScript is under development.'
-#               'You need to figure out the dto basing on the provided two files.',
-#     llm=llm,
-#     tools=[FileReadTool()],
-#     allow_delegation=False
-# )
 
-# read_task2 = Task(
-#     description="You are given three files {csv_file}, {origin_type_file} and {basic_interfaces}."
-#                 'Please read them and then update the {origin_type_file} by removing the redundancy'
-#                 'basing on the field names exist in the "数据库 Field 名称" column of the {csv_file} and'
-#                 'replace the customized interface by interface from the {basic_interfaces} and add'
-#                 'the appropriate import phase.'
-#                 'Write them into a new file {type_file}.',
-#     expected_output='The updated code from {origin_type_file}.'
-#                     'And remember the Action Input part in your answer should always follow the format:'
-#                     '"""'
-#                     'Action Input: {{"key": "value"}}'
-#                     '"""',
-#     agent=file_reader,
-#     tools=[FileReadTool()]
-# )
 file_creator = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",
     goal="Create the file {type_file} according to the new code content.",
@@ -123,9 +92,12 @@ inputs = {
 }
 
 
-def create_type():
+def create_new_type():
     result = my_crew.kickoff(inputs=inputs)
     print('my_crew.usage_metrics', my_crew.usage_metrics)
     print('***the result***')
     print(result)
     print('***the result***')
+
+
+# create_new_type()
