@@ -2,10 +2,10 @@ import main
 from create_new_base_module_files import generate_files_in_directory
 from update_base import update_base_files
 from update_base_by_whole import update_base_files_by_whole
+from create_new_module_enum import create_enum
 from agents.create_type import create_type
 from create_new_module_type import create_new_type
 from update_new_module_type_v2 import update_type_v2
-from create_new_module_enum import create_enum
 from update_new_module_files import update_new_module_files
 from update_new_module_files_v2 import update_new_module_files_v2
 
