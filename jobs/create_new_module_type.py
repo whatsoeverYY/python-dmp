@@ -18,9 +18,10 @@ file_reader = Agent(
          "The 'TEMPLATE_CODE' part should be replaced by {new_module_name},"
          "And the three interfaces should be filled by the fields name in the {csv_file}."
          "The dto interface should be filled by the fields name in the '数据库 Field 名称'"
-         "The other two interfaces should be filled by the fields name in the '数据库 Field 名称'"
+         "The other two interfaces SearchFormParams and SearchParams "
+         "should be filled by the fields name in the '数据库 Field 名称'"
          " which is 'YES' in the '检索' column."
-         "And the fields in SearchFormParams should all be added prefix 'fe_'."
+         "And the fields in SearchFormParams should all be added the prefix 'fe_'."
          "The type of all fields in those three interfaces should be string."
          "Each field should add comment to clarify the name which can be known from "
          "the '字段名称' column from the {csv_file}",
@@ -100,4 +101,4 @@ def create_new_type():
     print('***the result***')
 
 
-# create_new_type()
+create_new_type()

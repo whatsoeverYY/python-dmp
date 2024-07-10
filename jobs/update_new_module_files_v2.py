@@ -21,13 +21,14 @@ file_updator = Agent(
 file_update_task = Task(
     description='Modify the file {file_path} according to files and rules below.'
                 'Rules:'
-                'Some of the arrays in the file are lack of some elements, you need to complete them'
-                'according to the enums in the file enum.'
+                'The class in the file are lack of some elements, you need to complete them'
+                'according to the dto interface fields in the file type.'
+                'The format of the new elements should follow the rule in the comments.'
                 "Keep the unchanged part of the file as it is."
                 'file:'
                 '{file}'
-                'enum:'
-                '{enum}',
+                'type:'
+                '{type}',
     expected_output='Please provide the contents of the updated file'
                     'And remember the Action Input part in your answer should always following the format:'
                     '"""'
@@ -45,15 +46,14 @@ my_crew = Crew(
     verbose=True,
 )
 
-
-need_update_files = [
-    # '/views/templateCode/TemplateCodePreviewList.tsx',
-    # '/views/templateCode/TemplateCodeEditList.tsx',
-    # '/views/templateCode/TemplateCodeRecycleBin.tsx',
-    # '/views/templateCode/detail/TemplateCodeEditPage.tsx',
+# LLM更新配置
+need_update_by_llm_files = [
+    '/domains/templateCodeDomain/entity.ts',
     # '/views/templateCode/composition/useTemplateCodeSearchFormItems.tsx',
     # '/views/templateCode/composition/useTemplateCodeDocEdit.tsx',
     # '/views/templateCode/composition/useTemplateCodeListColumns.tsx',
+    # '/domains/templateCodeDomain/transform.ts',
+    # '/views/templateCode/locales/cn.ts',
 ]
 
 new_module_path = main.BASE_ROUTE + 'src/'
@@ -61,13 +61,13 @@ new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
 
-def update_new_module_files():
-    for i in range(0, len(need_update_files)):
-        file_path = replace_path_name(new_module_path + need_update_files[i], new_module_name)
+def update_new_module_files_v2():
+    for i in range(0, len(need_update_by_llm_files)):
+        file_path = replace_path_name(new_module_path + need_update_by_llm_files[i], new_module_name)
         inputs = {
-            "file": read_file(file_path),
-            "enum": read_file(replace_path_name(new_module_path + main.ENUM_FILE, new_module_name)),
-            "file_path": file_path
+            "file_path": read_file(file_path),
+            "type": read_file(replace_path_name(new_module_path + main.TYPE_FILE, new_module_name)),
+            "file": file_path
         }
         result = my_crew.kickoff(inputs=inputs)
         print('my_crew.usage_metrics', my_crew.usage_metrics)
@@ -76,4 +76,4 @@ def update_new_module_files():
         print('***the result***')
 
 
-update_new_module_files()
+update_new_module_files_v2()

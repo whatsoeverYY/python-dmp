@@ -89,3 +89,7 @@ def create_enum():
     print('***the result***')
     print(result)
     print('***the result***')
+
+
+create_enum()
+
