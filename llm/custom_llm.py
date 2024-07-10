@@ -26,12 +26,13 @@ def chat_completion(message):
     }
     response = requests.post(main.CHAT_URL, headers=headers, data=json.dumps(payload))
     res = response.json()
+    res_mes = res["data"]["message"]
     print('-------------------- 接口返回 start --------------------')
     print(res["data"]["message"])
     if '```python' in res["data"]["message"] or '```json' in res["data"]["message"]:
-        raise Exception("Action Input格式错误，请重试")
+        return res_mes.replace('```python', '').replace('```json', '').replace('```typeScript', '').replace('```', '')
     print('-------------------- 接口返回 end --------------------')
-    return res["data"]["message"]
+    return res_mes
 
 
 if __name__ == '__main__':

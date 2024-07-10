@@ -18,12 +18,14 @@ file_updator = Agent(
     tools=[FileCreateTool()],
     allow_delegation=False
 )
-file_update_task = Task(
+file_update_task_type = Task(
     description='Modify the file {file_path} according to files and rules below.'
                 'Rules:'
-                'The class in the file are lack of some elements, you need to complete them'
-                'according to the dto interface fields in the file type.'
+                'The object in the file are lack of some elements, you need to complete them'
+                'according to the interfaces fields in the file type.'
                 'The format of the new elements should follow the rule in the comments.'
+                'If there are prefix before the fields in the comments, '
+                'you need to add the prefix to the new elements as well.'
                 "Keep the unchanged part of the file as it is."
                 'file:'
                 '{file}'
@@ -38,22 +40,55 @@ file_update_task = Task(
     tools=[FileCreateTool()]
 )
 
-my_crew = Crew(
+file_update_task_enum = Task(
+    description='Modify the file {file_path} according to files and rules below.'
+                'Rules:'
+                'The class in the file are lack of some elements, you need to complete them '
+                'according to the enums in the file enum.'
+                'The format of the new elements should always follow the rule in the comments.'
+                'Make sure the fields value in the new elements has the same prefix as in the comments.'
+                # 'Please noted that if there is prefix in the value of the field such as "li" or "mod" in the comments, '
+                # 'you should follow the rule to add the new elements.'
+                "Keep the unchanged part of the file as it is.\n"
+                'file:\n'
+                '{file}'
+                'enum:\n'
+                '{enum}',
+    expected_output='Please provide the contents of the updated file'
+                    'And remember the Action Input part in your answer should always following the format:'
+                    '"""'
+                    'Action Input: {{"key": "value"}}'
+                    '"""',
+    agent=file_updator,
+    tools=[FileCreateTool()]
+)
+
+my_crew_type = Crew(
     agents=[file_updator],
-    tasks=[file_update_task],
+    tasks=[file_update_task_type],
+    process=Process.sequential,
+    full_output=True,
+    verbose=True,
+)
+
+my_crew_enum = Crew(
+    agents=[file_updator],
+    tasks=[file_update_task_enum],
     process=Process.sequential,
     full_output=True,
     verbose=True,
 )
 
 # LLM更新配置
-need_update_by_llm_files = [
+need_update_by_type = [
     '/domains/templateCodeDomain/entity.ts',
-    # '/views/templateCode/composition/useTemplateCodeSearchFormItems.tsx',
-    # '/views/templateCode/composition/useTemplateCodeDocEdit.tsx',
-    # '/views/templateCode/composition/useTemplateCodeListColumns.tsx',
-    # '/domains/templateCodeDomain/transform.ts',
-    # '/views/templateCode/locales/cn.ts',
+    '/domains/templateCodeDomain/transform.ts',
+]
+need_update_by_enum = [
+    '/views/templateCode/locales/cn.ts',
+    '/views/templateCode/composition/useTemplateCodeSearchFormItems.tsx',
+    '/views/templateCode/composition/useTemplateCodeDocEdit.tsx',
+    '/views/templateCode/composition/useTemplateCodeListColumns.tsx',
 ]
 
 new_module_path = main.BASE_ROUTE + 'src/'
@@ -62,15 +97,28 @@ new_module_name_cn = main.NEW_MODULE_NAME_CN
 
 
 def update_new_module_files_v2():
-    for i in range(0, len(need_update_by_llm_files)):
-        file_path = replace_path_name(new_module_path + need_update_by_llm_files[i], new_module_name)
+    for i in range(0, len(need_update_by_type)):
+        file_path = replace_path_name(new_module_path + need_update_by_type[i], new_module_name)
         inputs = {
-            "file_path": read_file(file_path),
+            "file": read_file(file_path),
             "type": read_file(replace_path_name(new_module_path + main.TYPE_FILE, new_module_name)),
-            "file": file_path
+            "file_path": file_path
         }
-        result = my_crew.kickoff(inputs=inputs)
-        print('my_crew.usage_metrics', my_crew.usage_metrics)
+        result = my_crew_type.kickoff(inputs=inputs)
+        print('my_crew.usage_metrics', my_crew_type.usage_metrics)
+        print('***the result***')
+        print(result)
+        print('***the result***')
+
+    for i in range(0, len(need_update_by_enum)):
+        file_path = replace_path_name(new_module_path + need_update_by_enum[i], new_module_name)
+        inputs = {
+            "file": read_file(file_path),
+            "enum": read_file(replace_path_name(new_module_path + main.ENUM_FILE, new_module_name)),
+            "file_path": file_path
+        }
+        result = my_crew_enum.kickoff(inputs=inputs)
+        print('my_crew.usage_metrics', my_crew_enum.usage_metrics)
         print('***the result***')
         print(result)
         print('***the result***')

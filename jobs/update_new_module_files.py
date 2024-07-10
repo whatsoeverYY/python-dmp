@@ -47,13 +47,10 @@ my_crew = Crew(
 
 
 need_update_files = [
-    # '/views/templateCode/TemplateCodePreviewList.tsx',
-    # '/views/templateCode/TemplateCodeEditList.tsx',
-    # '/views/templateCode/TemplateCodeRecycleBin.tsx',
-    # '/views/templateCode/detail/TemplateCodeEditPage.tsx',
-    # '/views/templateCode/composition/useTemplateCodeSearchFormItems.tsx',
-    # '/views/templateCode/composition/useTemplateCodeDocEdit.tsx',
-    # '/views/templateCode/composition/useTemplateCodeListColumns.tsx',
+    '/views/templateCode/TemplateCodePreviewList.tsx',
+    '/views/templateCode/TemplateCodeEditList.tsx',
+    '/views/templateCode/TemplateCodeRecycleBin.tsx',
+    '/views/templateCode/detail/TemplateCodeEditPage.tsx',
 ]
 
 new_module_path = main.BASE_ROUTE + 'src/'
