@@ -96,7 +96,7 @@ new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
 
-def update_new_module_files_v2():
+def update_new_module_files_by_type_v2():
     for i in range(0, len(need_update_by_type)):
         file_path = replace_path_name(new_module_path + need_update_by_type[i], new_module_name)
         inputs = {
@@ -110,6 +110,7 @@ def update_new_module_files_v2():
         print(result)
         print('***the result***')
 
+def update_new_module_files_by_enum_v2():
     for i in range(0, len(need_update_by_enum)):
         file_path = replace_path_name(new_module_path + need_update_by_enum[i], new_module_name)
         inputs = {
@@ -124,4 +125,6 @@ def update_new_module_files_v2():
         print('***the result***')
 
 
-update_new_module_files_v2()
+update_new_module_files_by_type_v2()
+update_new_module_files_by_enum_v2()
+

@@ -19,7 +19,7 @@ file_updator = Agent(
 )
 
 file_update_task = Task(
-    description="Update the file {type_file_path} basing on the files adn rules offered."
+    description="Update the file {type_file_path} basing on the files and rules offered."
                 "Rules:"
                 "Replace the type of the fields in the dto interface in the type file"
                 " according to the type of the same fields in the dto interface in the dto type file."
