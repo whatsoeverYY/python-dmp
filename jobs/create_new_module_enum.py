@@ -14,13 +14,15 @@ llm = custom_llm
 file_creator = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",
     goal="Create the file {enum_file} according to files and rules listed below."
-         "Basing on the data in the '数据库 Field 名称', '检索' and '列表展示’ column in the csv file, "
+         "Basing on the data in the '数据库 Field 名称', '检索'，'列表展示' and '详情页展示' column in the csv file, "
          "define three enums."
          "The format should be like the content in the enum template file."
          "The 'TEMPLATE_CODE' part should be replaced by {new_module_name},"
          "And the three enums should be filled by the fields name in the csv file."
-         "The LIST_COLUMNS enum and the DOC_ITEMS enum should be filled by the fields name in the '数据库 Field 名称' column"
+         "The LIST_COLUMNS enum should be filled by the fields name in the '数据库 Field 名称' column"
          " which is 'YES' in the '列表展示' column"
+         "The DOC_ITEMS enum should be filled by the fields name in the '数据库 Field 名称' column"
+         " which is 'YES' in the '详情页展示' column"
          "The SEARCH_PARAMS enum should be filled by the fields name in the '数据库 Field 名称' column"
          " which is 'YES' in the '检索' column."
          "csv file:"
