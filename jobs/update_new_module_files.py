@@ -52,7 +52,7 @@ need_update_files = [
     '/views/templateCode/detail/TemplateCodeEditPage.tsx',
 ]
 
-new_module_path = main.BASE_ROUTE + 'src/'
+new_module_path = main.BASE_ROUTE + 'src'
 new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
@@ -72,4 +72,4 @@ def update_new_module_files():
         print('***the result***')
 
 
-update_new_module_files()
+# update_new_module_files()

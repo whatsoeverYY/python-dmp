@@ -17,8 +17,8 @@ CHAT_ENGINE = os.getenv('CHAT_ENGINE')
 NEW_MODULE_NAME = os.getenv('NEW_MODULE_NAME')
 NEW_MODULE_NAME_CN = os.getenv('NEW_MODULE_NAME_CN')
 
-ENUM_FILE = 'domains/templateCodeDomain/enum.ts'
-TYPE_FILE = 'types/TemplateCodeType.ts'
+ENUM_FILE = '/domains/templateCodeDomain/enum.ts'
+TYPE_FILE = '/types/TemplateCodeType.ts'
 
 
 def print_hi(name):

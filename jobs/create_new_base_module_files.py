@@ -38,4 +38,4 @@ def generate_files_in_directory(directory_path):
         print(f"发生错误: {e}")
 
 
-generate_files_in_directory(main.BASE_ROUTE + '_template_code')
+# generate_files_in_directory(main.BASE_ROUTE + '_template_code')

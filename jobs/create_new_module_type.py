@@ -77,4 +77,4 @@ def create_new_type():
     print('***the result***')
 
 
-create_new_type()
+# create_new_type()

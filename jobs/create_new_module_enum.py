@@ -74,4 +74,4 @@ def create_enum():
     print('***the result***')
 
 
-create_enum()
+# create_enum()

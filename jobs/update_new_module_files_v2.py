@@ -91,7 +91,7 @@ need_update_by_enum = [
     '/views/templateCode/composition/useTemplateCodeListColumns.tsx',
 ]
 
-new_module_path = main.BASE_ROUTE + 'src/'
+new_module_path = main.BASE_ROUTE + 'src'
 new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
@@ -125,6 +125,6 @@ def update_new_module_files_by_enum_v2():
         print('***the result***')
 
 
-update_new_module_files_by_type_v2()
-update_new_module_files_by_enum_v2()
+# update_new_module_files_by_type_v2()
+# update_new_module_files_by_enum_v2()
 

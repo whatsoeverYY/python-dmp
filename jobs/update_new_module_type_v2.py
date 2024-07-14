@@ -67,4 +67,4 @@ def update_type_v2():
     print('***the result***')
 
 
-update_type_v2()
+# update_type_v2()

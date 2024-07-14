@@ -62,4 +62,4 @@ def update_base_files_by_whole():
         print('***the result***')
 
 
-update_base_files_by_whole()
+# update_base_files_by_whole()
