@@ -8,7 +8,6 @@ from func.read_file import read_file
 
 llm = custom_llm
 
-
 file_updator = Agent(
     role="An front-end development expert, proficient in Vue and TypeScript",
     goal="Modify the file {file_path} according to files and rules below.",
@@ -47,8 +46,6 @@ file_update_task_enum = Task(
                 'according to the enums in the file enum.'
                 'The format of the new elements should always follow the rule in the comments.'
                 'Make sure the fields value in the new elements has the same prefix as in the comments.'
-                # 'Please noted that if there is prefix in the value of the field such as "li" or "mod" in the comments, '
-                # 'you should follow the rule to add the new elements.'
                 "Keep the unchanged part of the file as it is.\n"
                 'file:\n'
                 '{file}'
@@ -96,9 +93,9 @@ new_module_name = main.NEW_MODULE_NAME
 new_module_name_cn = main.NEW_MODULE_NAME_CN
 
 
-def update_new_module_files_by_type_v2():
-    for i in range(0, len(need_update_by_type)):
-        file_path = replace_path_name(new_module_path + need_update_by_type[i], new_module_name)
+def update_new_module_files_by_type_v2(arr=need_update_by_type):
+    for i in range(0, len(arr)):
+        file_path = replace_path_name(new_module_path + arr[i], new_module_name)
         inputs = {
             "file": read_file(file_path),
             "type": read_file(replace_path_name(new_module_path + main.TYPE_FILE, new_module_name)),
@@ -110,9 +107,10 @@ def update_new_module_files_by_type_v2():
         print(result)
         print('***the result***')
 
-def update_new_module_files_by_enum_v2():
-    for i in range(0, len(need_update_by_enum)):
-        file_path = replace_path_name(new_module_path + need_update_by_enum[i], new_module_name)
+
+def update_new_module_files_by_enum_v2(arr=need_update_by_enum):
+    for i in range(0, len(arr)):
+        file_path = replace_path_name(new_module_path + arr[i], new_module_name)
         inputs = {
             "file": read_file(file_path),
             "enum": read_file(replace_path_name(new_module_path + main.ENUM_FILE, new_module_name)),
@@ -124,7 +122,5 @@ def update_new_module_files_by_enum_v2():
         print(result)
         print('***the result***')
 
-
 # update_new_module_files_by_type_v2()
 # update_new_module_files_by_enum_v2()
-

@@ -20,6 +20,8 @@ NEW_MODULE_NAME_CN = os.getenv('NEW_MODULE_NAME_CN')
 ENUM_FILE = '/domains/templateCodeDomain/enum.ts'
 TYPE_FILE = '/types/TemplateCodeType.ts'
 
+TASK_REPEAT_USAGE = "I tried reusing the same input, I must stop using this action input. I'll try something else instead."
+
 
 def print_hi(name):
     excluded_files = [
@@ -43,8 +45,45 @@ def searchActionInput(text):
 
     print("Action Input:", action_input)
 
+def extract_final_answer(text):
+    marker = "Final Answer:"
+    try:
+        # Find the position of the marker in the text
+        start_index = text.index(marker) + len(marker)
+        # Extract and return the substring after the marker
+        return text[start_index:].strip()
+    except ValueError:
+        # If the marker is not found in the text, return an empty string or an appropriate message
+        return "Marker 'Final Answer:' not found in the text."
+
 
 if __name__ == '__main__':
+    # Example usage
+    text = '''Thought: I need to update the `dataSubMenus` object in the file `/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/locales/cn.ts` by adding the new module `translationalMedicine: '转化医学',`. I will use the `Update a file's content` tool to achieve this.
+
+Action: Update a file's content
+Action Input: {"file_path": "/Users/ever/Documents/AI/projects/data-management-platform-frontend/src/locales/cn.ts", "object_str": "dataSubMenus", "content": "translationalMedicine: '转化医学',"}
+
+Observation: The file content has been successfully updated.
+
+Thought: I now know the final answer.
+
+Final Answer:
+### Objects to be Modified:
+1. `dataSubMenus`
+
+### New Code to be Added:
+```javascript
+translationalMedicine: '转化医学',
+```'''
+    result = extract_final_answer(text)
+    print(result)  # Output: This is the final answer.
+
+
+    aaa = '''Thought: I now know the final answer'
+Final Answer:'''
+    # print(aaa)
+
     a = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/_template_code/domains/templateCodeDomain/enum.ts'
     b = '/Users/ever/Documents/AI/projects/data-management-platform-frontend/_template_code/views/templateCode/locales/cn.ts'
     # print_hi(a)
@@ -56,5 +95,4 @@ Action Input:
 ```
 
 Observation: The file has been successfully updated.'''
-    searchActionInput(text)
-
+    # searchActionInput(text)

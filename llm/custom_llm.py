@@ -17,7 +17,18 @@ headers = {
 }
 
 
-def chat_completion(message):
+def extract_from_text(text, content):
+    try:
+        # Find the position of the marker in the text
+        start_index = content.index(text) + len(text)
+        # Extract and return the substring after the marker
+        return content[start_index:].strip()
+    except ValueError:
+        # If the marker is not found in the text, return an empty string or an appropriate message
+        return "Marker 'Final Answer:' not found in the text."
+
+
+def chat_completion(message, reused):
     payload = {
         "model": main.CHAT_MODEL,
         "messages": message,
@@ -26,11 +37,20 @@ def chat_completion(message):
     }
     response = requests.post(main.CHAT_URL, headers=headers, data=json.dumps(payload))
     res = response.json()
+    print('-------------------- 接口返回 res --------------------')
+    print(res)
+    print('-------------------- 接口返回 res --------------------')
     res_mes = res["data"]["message"]
     print('-------------------- 接口返回 start --------------------')
     print(res["data"]["message"])
     if '```python' in res["data"]["message"] or '```json' in res["data"]["message"]:
+        print('-------------------- 接口返回 start 替换``` --------------------')
         return res_mes.replace('```python', '').replace('```json', '').replace('```typeScript', '').replace('```', '')
+    if reused:
+        print('-------------------- 接口返回 start 调整Final Answer: --------------------')
+        return '''Thought: I now know the final answer'
+Final Answer:
+''' + extract_from_text('Final Answer:', res_mes)
     print('-------------------- 接口返回 end --------------------')
     return res_mes
 
@@ -96,7 +116,15 @@ class CustomLLM(LLM):
         # logger = setup_logger(log_file_name)
         # logger.info(prompt)
 
-        text = chat_completion(message)
+        if_reused = main.TASK_REPEAT_USAGE in prompt
+
+        if if_reused:
+            print('-------------------- custom llm prompt - TASK_REPEAT_USAGE --------------------')
+        print('-------------------- custom llm prompt - here is the output content Start --------------------')
+        print(prompt)
+        print('-------------------- custom llm prompt - here is the output content End --------------------')
+
+        text = chat_completion(message, if_reused)
         if stop is not None:
             text = enforce_stop_tokens(text, stop)
 
