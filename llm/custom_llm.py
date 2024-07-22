@@ -45,12 +45,16 @@ def chat_completion(message, reused):
     print(res["data"]["message"])
     if '```python' in res["data"]["message"] or '```json' in res["data"]["message"]:
         print('-------------------- 接口返回 start 替换``` --------------------')
-        return res_mes.replace('```python', '').replace('```json', '').replace('```typeScript', '').replace('```', '')
+        replaced_res = res_mes.replace('```python', '').replace('```json', '').replace('```typeScript', '').replace('```', '')
+        print(replaced_res)
+        return replaced_res
     if reused:
         print('-------------------- 接口返回 start 调整Final Answer: --------------------')
-        return '''Thought: I now know the final answer'
+        replaced_res = '''Thought: I now know the final answer'
 Final Answer:
 ''' + extract_from_text('Final Answer:', res_mes)
+        print(replaced_res)
+        return replaced_res
     print('-------------------- 接口返回 end --------------------')
     return res_mes
 

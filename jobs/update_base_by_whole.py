@@ -21,7 +21,7 @@ file_updater = Agent(
 file_update_task = Task(
     description='A new module need to be added into the project: {module_info}. '
                 'Following the TEMPLATE_CODE(模板代码) part in the file to update the file {file_path}.'
-                'update the {file_path} correctly.'
+                'Update the {file_path} correctly.'
                 'Keep the unchanged part as it is.'
                 '"""'
                 '{file}'
